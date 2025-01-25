@@ -1,167 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Art Canvas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Art Studio</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom, #1a1a2e, #16213e);
+      color: white;
+      min-height: 100vh;
+      overflow: hidden;
+    }
 
-        header {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-        }
+    h1, h2, button {
+      animation: fadeIn 1s ease-in-out;
+    }
 
-        .container {
-            padding: 20px;
-        }
+    button {
+      background: #6c5ce7;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-        .canvas-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+    button:hover {
+      background: #a29bfe;
+    }
 
-        canvas {
-            border: 1px solid black;
-            margin: 10px;
-        }
+    .hidden {
+      display: none;
+    }
 
-        button {
-            padding: 10px 15px;
-            margin: 5px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-        }
+    .center {
+      text-align: center;
+      margin: 20px;
+    }
 
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    canvas {
+      border: 1px solid white;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .toolbox {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .toolbox input, .toolbox select {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 5px;
+      font-size: 1rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Art Canvas</h1>
-    </header>
-    <div class="container">
-        <div id="home-page" class="canvas-container">
-            <h2>Create a New Canvas</h2>
-            <label for="width">Width:</label>
-            <input type="number" id="width" placeholder="Enter width">
-            <label for="height">Height:</label>
-            <input type="number" id="height" placeholder="Enter height">
-            <button onclick="createCanvas()">Create</button>
-            <h3>Or Load a Saved Project</h3>
-            <button onclick="loadSavedProjects()">Load Project</button>
-            <div id="saved-projects"></div>
-        </div>
-
-        <div id="canvas-page" style="display: none;">
-            <div class="canvas-container">
-                <canvas id="drawingCanvas"></canvas>
-                <button onclick="saveProject()">Save Project</button>
-                <button onclick="saveToDesktop()">Save to Desktop</button>
-                <button onclick="goHome()">Back to Home</button>
-            </div>
-        </div>
+  <div class="center">
+    <h1>Welcome to Modern Art Studio</h1>
+    <button id="createCanvasBtn">Create Canvas</button>
+    <div id="canvasOptions" class="hidden">
+      <h2>Create Your Canvas</h2>
+      <label for="width">Width:</label>
+      <input type="number" id="width" placeholder="e.g., 800">
+      <label for="height">Height:</label>
+      <input type="number" id="height" placeholder="e.g., 600">
+      <button id="startDrawing">Start Drawing</button>
     </div>
+  </div>
 
-    <script>
-        const homePage = document.getElementById("home-page");
-        const canvasPage = document.getElementById("canvas-page");
-        const canvasElement = document.getElementById("drawingCanvas");
-        const ctx = canvasElement.getContext("2d");
-        let currentProject = null;
+  <div id="drawingSection" class="hidden">
+    <h2>Draw Your Masterpiece</h2>
+    <canvas id="artCanvas"></canvas>
+    <div class="toolbox">
+      <label for="color">Pen Color:</label>
+      <input type="color" id="color" value="#000000">
+      <label for="size">Pen Size:</label>
+      <select id="size">
+        <option value="2">2px</option>
+        <option value="5">5px</option>
+        <option value="10">10px</option>
+        <option value="20">20px</option>
+      </select>
+      <button id="saveArt">Save</button>
+      <button id="downloadArt">Save to Desktop</button>
+    </div>
+  </div>
 
-        function createCanvas() {
-            const width = parseInt(document.getElementById("width").value) || 800;
-            const height = parseInt(document.getElementById("height").value) || 600;
-            canvasElement.width = width;
-            canvasElement.height = height;
-            homePage.style.display = "none";
-            canvasPage.style.display = "block";
-            currentProject = { width, height, data: null, name: "Untitled" };
-        }
+  <script>
+    const createCanvasBtn = document.getElementById("createCanvasBtn");
+    const canvasOptions = document.getElementById("canvasOptions");
+    const startDrawing = document.getElementById("startDrawing");
+    const drawingSection = document.getElementById("drawingSection");
+    const artCanvas = document.getElementById("artCanvas");
+    const saveArt = document.getElementById("saveArt");
+    const downloadArt = document.getElementById("downloadArt");
+    const colorPicker = document.getElementById("color");
+    const penSize = document.getElementById("size");
+    let ctx;
+    let isDrawing = false;
+    let projects = JSON.parse(localStorage.getItem("artProjects")) || {};
 
-        function saveProject() {
-            const id = getUniqueId();
-            const data = canvasElement.toDataURL();
-            currentProject.data = data;
-            const projects = JSON.parse(localStorage.getItem(id) || "[]");
-            projects.push(currentProject);
-            localStorage.setItem(id, JSON.stringify(projects));
-            alert("Project saved successfully!");
-        }
+    function showElement(element) {
+      element.classList.remove("hidden");
+    }
 
-        function loadSavedProjects() {
-            const id = getUniqueId();
-            const savedProjects = JSON.parse(localStorage.getItem(id) || "[]");
-            const savedProjectsDiv = document.getElementById("saved-projects");
-            savedProjectsDiv.innerHTML = "";
-            savedProjects.forEach((project, index) => {
-                const button = document.createElement("button");
-                button.innerText = project.name || `Project ${index + 1}`;
-                button.onclick = () => loadProject(project);
-                savedProjectsDiv.appendChild(button);
-            });
-        }
+    function hideElement(element) {
+      element.classList.add("hidden");
+    }
 
-        function loadProject(project) {
-            canvasElement.width = project.width;
-            canvasElement.height = project.height;
-            const img = new Image();
-            img.onload = () => ctx.drawImage(img, 0, 0);
-            img.src = project.data;
-            homePage.style.display = "none";
-            canvasPage.style.display = "block";
-            currentProject = project;
-        }
+    createCanvasBtn.addEventListener("click", () => {
+      hideElement(createCanvasBtn);
+      showElement(canvasOptions);
+    });
 
-        function saveToDesktop() {
-            const link = document.createElement("a");
-            const name = prompt("Enter file name", currentProject.name) || "Untitled";
-            link.download = `${name}.png`;
-            link.href = canvasElement.toDataURL();
-            link.click();
-        }
+    startDrawing.addEventListener("click", () => {
+      const width = document.getElementById("width").value || 800;
+      const height = document.getElementById("height").value || 600;
 
-        function goHome() {
-            homePage.style.display = "block";
-            canvasPage.style.display = "none";
-        }
+      artCanvas.width = width;
+      artCanvas.height = height;
+      ctx = artCanvas.getContext("2d");
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, width, height);
 
-        function getUniqueId() {
-            return "user-projects"; // Simulates unique ID for now.
-        }
+      hideElement(canvasOptions);
+      showElement(drawingSection);
 
-        canvasElement.addEventListener("mousedown", (e) => {
-            const rect = canvasElement.getBoundingClientRect();
-            const startX = e.clientX - rect.left;
-            const startY = e.clientY - rect.top;
-            ctx.beginPath();
-            ctx.moveTo(startX, startY);
-            function draw(event) {
-                const x = event.clientX - rect.left;
-                const y = event.clientY - rect.top;
-                ctx.lineTo(x, y);
-                ctx.stroke();
-            }
-            canvasElement.addEventListener("mousemove", draw);
-            canvasElement.addEventListener("mouseup", () => {
-                canvasElement.removeEventListener("mousemove", draw);
-            }, { once: true });
-        });
-    </script>
+      setupDrawing();
+    });
+
+    function setupDrawing() {
+      artCanvas.addEventListener("mousedown", () => (isDrawing = true));
+      artCanvas.addEventListener("mouseup", () => (isDrawing = false));
+      artCanvas.addEventListener("mousemove", draw);
+
+      function draw(e) {
+        if (!isDrawing) return;
+
+        const rect = artCanvas.getBoundingClientRect();
+        ctx.strokeStyle = colorPicker.value;
+        ctx.lineWidth = penSize.value;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.stroke();
+      }
+    }
+
+    saveArt.addEventListener("click", () => {
+      const title = prompt("Enter a title for your artwork:");
+      if (title) {
+        projects[title] = artCanvas.toDataURL();
+        localStorage.setItem("artProjects", JSON.stringify(projects));
+        alert("Project saved successfully!");
+      }
+    });
+
+    downloadArt.addEventListener("click", () => {
+      const link = document.createElement("a");
+      const title = prompt("Enter a name for your download:");
+      link.download = title ? `${title}.png` : "artwork.png";
+      link.href = artCanvas.toDataURL();
+      link.click();
+    });
+  </script>
 </body>
 </html>
