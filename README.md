@@ -6,7 +6,7 @@ An advanced art website for drawing artwork.
 ## Demo
 Watch the demo video of the project below:
 
-[![Demo Video](https://i9.ytimg.com/vi_webp/U4Q6bQn8QkM/mqdefault.webp?v=67954dba&sqp=CMya1bwG&rs=AOn4CLCjzQVN3RHujZa8N-a3GNPQ5h9T0Q)](https://www.youtube.com/watch?v=U4Q6bQn8QkM)
+[![Demo Video](https://i9.ytimg.com/vi_webp/U4Q6bQn8QkM/mqdefault.webp?v=67954fad&sqp=CKSf1bwG&rs=AOn4CLBpoh3GZO0QdD9Zo8YBsFbX5a9suQ)](https://www.youtube.com/watch?v=U4Q6bQn8QkM)
 
 ## Features
 - Easy save and open properties.
