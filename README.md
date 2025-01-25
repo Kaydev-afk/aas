@@ -1,26 +1,17 @@
-# Project Title
+# Advanced Art Studio
 
 ## Description
-A brief description of your project goes here.
+An advanced art website for drawing artwork.
 
 ## Demo
 Watch the demo video of the project below:
 
 [![Demo Video](KDDDr3c0gV0/mq2.webp?sqp=CODy1LwG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGD0gRyh_MA8=&rs=AOn4CLC5uv7mVtuvQp0YOlHRa3LY8MqGHg)](https://www.youtube.com/watch?v=KDDDr3c0gV0)
 
-Replace `YOUR_VIDEO_ID` with the ID of your YouTube video (the part after "v=" in the URL).
-
 ## Features
-- Feature 1
-- Feature 2
-- Feature 3
-
-## Installation
-Steps to install and run your project:
-
-1. Step 1
-2. Step 2
-3. Step 3
+- Easy save and open properties.
+- Additional pen drawing options.
+- 100% Free to use.
 
 ## Usage
 How to use the project:
@@ -36,5 +27,5 @@ How to use the project:
 5. Create a new Pull Request
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPU License - see the [LICENSE](LICENSE) file for details.
 
