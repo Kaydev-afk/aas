@@ -12,7 +12,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       background-color: #121212;
       color: white;
       min-height: 100vh;
@@ -150,6 +150,26 @@
         transform: translateY(100vh);
       }
     }
+
+    /* Back to Home Button */
+    #backToHome {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333333;
+      color: white;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+
+    #backToHome:hover {
+      background: #444444;
+    }
   </style>
 </head>
 <body>
@@ -171,7 +191,6 @@
     <div id="projectList" class="hidden">
       <h2>Saved Projects</h2>
       <div class="project-list" id="projects"></div>
-      <button id="backToHome">Back to Home</button>
     </div>
   </div>
 
@@ -193,6 +212,8 @@
       <button id="returnHome">Return to Home Page</button>
     </div>
   </div>
+
+  <button id="backToHome" class="hidden">Back to Home</button>
 
   <script>
     const createCanvasBtn = document.getElementById("createCanvasBtn");
@@ -263,23 +284,26 @@
     });
 
     function setupDrawing() {
-      artCanvas.addEventListener("mousedown", () => (isDrawing = true));
-      artCanvas.addEventListener("mouseup", () => (isDrawing = false));
-      artCanvas.addEventListener("mousemove", draw);
+      artCanvas.addEventListener("mousedown", () => {
+        isDrawing = true;
+      });
 
-      function draw(e) {
+      artCanvas.addEventListener("mouseup", () => {
+        isDrawing = false;
+        ctx.beginPath();
+      });
+
+      artCanvas.addEventListener("mousemove", (e) => {
         if (!isDrawing) return;
 
-        const rect = artCanvas.getBoundingClientRect();
-        ctx.strokeStyle = colorPicker.value;
         ctx.lineWidth = penSize.value;
-        ctx.lineCap = "round";
+        ctx.strokeStyle = colorPicker.value;
         ctx.lineJoin = "round";
         ctx.beginPath();
-        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
-        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.moveTo(e.clientX - artCanvas.offsetLeft, e.clientY - artCanvas.offsetTop);
+        ctx.lineTo(e.clientX - artCanvas.offsetLeft, e.clientY - artCanvas.offsetTop);
         ctx.stroke();
-      }
+      });
     }
 
     function displayProjects() {
@@ -294,7 +318,7 @@
         projectItem.appendChild(img);
 
         const openBtn = document.createElement("button");
-        openBtn.textContent = "Open Project";
+        openBtn.textContent = `Open: ${title}`;
         openBtn.onclick = () => openProject(title);
         projectItem.appendChild(openBtn);
 
