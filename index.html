@@ -17,6 +17,7 @@
       color: white;
       min-height: 100vh;
       overflow: hidden;
+      position: relative;
     }
 
     /* Title Styles */
@@ -41,8 +42,8 @@
       color: white;
       border: none;
       border-radius: 5px;
-      padding: 10px 20px;
-      font-size: 1rem;
+      padding: 8px 16px; /* Smaller button size */
+      font-size: 0.9rem; /* Smaller font size */
       font-family: 'Roboto', sans-serif; /* More modern font */
       cursor: pointer;
       transition: background 0.3s ease, transform 0.2s ease;
@@ -105,9 +106,41 @@
         opacity: 1;
       }
     }
+
+    /* Falling Blocks Animation */
+    .falling-blocks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .block {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #4CAF50;
+      border-radius: 5px;
+      animation: fall 10s linear infinite;
+    }
+
+    @keyframes fall {
+      from {
+        transform: translateY(-100px);
+      }
+      to {
+        transform: translateY(100vh);
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Falling Blocks Background -->
+  <div class="falling-blocks"></div>
+
   <div class="center">
     <h1>Advanced Art Studio</h1>
     <button id="createCanvasBtn">Create New Canvas</button>
@@ -252,27 +285,40 @@
         artCanvas.height = img.height;
         ctx = artCanvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
+        hideElement(projectList);
+        showElement(drawingSection);
       };
-      hideElement(projectList);
-      showElement(drawingSection);
     }
 
     saveArt.addEventListener("click", () => {
+      const dataUrl = artCanvas.toDataURL();
       const title = prompt("Enter a title for your artwork:");
-      if (title) {
-        projects[title] = artCanvas.toDataURL();
+      if (title && !projects[title]) {
+        projects[title] = dataUrl;
         localStorage.setItem("artProjects", JSON.stringify(projects));
-        alert("Project saved successfully!");
       }
     });
 
     downloadArt.addEventListener("click", () => {
+      const dataUrl = artCanvas.toDataURL();
       const link = document.createElement("a");
-      const title = prompt("Enter a name for your download:");
-      link.download = title ? `${title}.png` : "artwork.png";
-      link.href = artCanvas.toDataURL();
+      link.href = dataUrl;
+      link.download = "artwork.png";
       link.click();
     });
+
+    // Create falling blocks for background
+    function createFallingBlocks() {
+      for (let i = 0; i < 100; i++) {
+        const block = document.createElement("div");
+        block.classList.add("block");
+        block.style.left = `${Math.random() * 100}%`;
+        block.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        document.querySelector(".falling-blocks").appendChild(block);
+      }
+    }
+
+    createFallingBlocks();
   </script>
 </body>
 </html>
