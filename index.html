@@ -18,6 +18,7 @@
       min-height: 100vh;
       overflow: hidden;
       position: relative;
+      text-align: center;
     }
 
     /* Title Styles */
@@ -26,7 +27,6 @@
       font-weight: bold;
       font-size: 3rem;
       text-transform: uppercase;
-      text-align: left;
       margin: 20px;
       letter-spacing: 2px;
       text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.6);
@@ -61,11 +61,6 @@
 
     .hidden {
       display: none;
-    }
-
-    .center {
-      text-align: center;
-      margin: 20px;
     }
 
     canvas {
@@ -109,6 +104,7 @@
       height: auto;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Glow effect */
+      margin-bottom: 10px; /* Space between image and button */
     }
 
     /* Animations */
@@ -282,29 +278,6 @@
       showElement(createCanvasBtn);
       showElement(openProjectBtn);
     });
-
-    function setupDrawing() {
-      artCanvas.addEventListener("mousedown", () => {
-        isDrawing = true;
-      });
-
-      artCanvas.addEventListener("mouseup", () => {
-        isDrawing = false;
-        ctx.beginPath();
-      });
-
-      artCanvas.addEventListener("mousemove", (e) => {
-        if (!isDrawing) return;
-
-        ctx.lineWidth = penSize.value;
-        ctx.strokeStyle = colorPicker.value;
-        ctx.lineJoin = "round";
-        ctx.beginPath();
-        ctx.moveTo(e.clientX - artCanvas.offsetLeft, e.clientY - artCanvas.offsetTop);
-        ctx.lineTo(e.clientX - artCanvas.offsetLeft, e.clientY - artCanvas.offsetTop);
-        ctx.stroke();
-      });
-    }
 
     function displayProjects() {
       projectsDiv.innerHTML = "";
