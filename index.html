@@ -35,19 +35,27 @@
       animation: fadeIn 1s ease-in-out;
     }
 
+    /* Button Styles */
     button {
-      background: #6c5ce7;
+      background: #2d2d2d; /* Dark Grey */
       color: white;
       border: none;
       border-radius: 5px;
       padding: 10px 20px;
       font-size: 1rem;
+      font-family: 'Roboto', sans-serif; /* More modern font */
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
     button:hover {
-      background: #a29bfe;
+      background: #444444; /* Lighter grey on hover */
+      transform: translateY(-2px); /* Slight raise on hover */
+    }
+
+    button:active {
+      background: #333333; /* Even darker grey on click */
+      transform: translateY(2px); /* Button presses down on click */
     }
 
     .hidden {
