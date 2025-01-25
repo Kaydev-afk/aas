@@ -1,4 +1,4 @@
-**A.A.S. App in progress (check it out in the demo video)
+**A.A.S. App in progress (check it out in the demo video)**
 
 # Advanced Art Studio
 
