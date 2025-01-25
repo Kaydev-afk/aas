@@ -29,5 +29,5 @@ How to use the project:
 5. Create a new Pull Request
 
 ## License
-This project is licensed under the GPU License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPL License - see the [LICENSE](LICENSE) file for details.
 
