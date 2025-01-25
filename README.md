@@ -6,7 +6,7 @@ A brief description of your project goes here.
 ## Demo
 Watch the demo video of the project below:
 
-[![Demo Video](https://i9.ytimg.com/vi_webp/KDDDr3c0gV0/mq2.webp?sqp=CODy1LwG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGD0gRyh_MA8=&rs=AOn4CLC5uv7mVtuvQp0YOlHRa3LY8MqGHg)](https://www.youtube.com/watch?v=KDDDr3c0gV0)
+[![Demo Video](KDDDr3c0gV0/mq2.webp?sqp=CODy1LwG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGD0gRyh_MA8=&rs=AOn4CLC5uv7mVtuvQp0YOlHRa3LY8MqGHg)](https://www.youtube.com/watch?v=KDDDr3c0gV0)
 
 Replace `YOUR_VIDEO_ID` with the ID of your YouTube video (the part after "v=" in the URL).
 
