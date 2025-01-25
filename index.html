@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Modern Art Studio</title>
+  <title>Advanced Art Studio</title>
   <style>
     /* General Styles */
     body {
@@ -13,13 +13,25 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(to bottom, #1a1a2e, #16213e);
+      background-color: #121212;
       color: white;
       min-height: 100vh;
       overflow: hidden;
     }
 
-    h1, h2, button {
+    /* Title Styles */
+    h1 {
+      font-family: 'Helvetica', sans-serif;
+      font-weight: bold;
+      font-size: 3rem;
+      text-transform: uppercase;
+      text-align: left;
+      margin: 20px;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.6);
+    }
+
+    h2, button {
       animation: fadeIn 1s ease-in-out;
     }
 
@@ -89,7 +101,7 @@
 </head>
 <body>
   <div class="center">
-    <h1>Welcome to Modern Art Studio</h1>
+    <h1>Advanced Art Studio</h1>
     <button id="createCanvasBtn">Create New Canvas</button>
     <button id="openProjectBtn">Open Saved Project</button>
     <div id="canvasOptions" class="hidden">
