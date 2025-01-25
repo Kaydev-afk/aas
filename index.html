@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: #f3f4f6;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .short-link {
+            margin-top: 20px;
+            display: none;
+        }
+        .short-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .short-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Shortener</h1>
+        <input type="text" id="originalUrl" placeholder="Paste your URL here" />
+        <button onclick="shortenUrl()">Shorten</button>
+        <div class="short-link" id="shortLinkContainer">
+            <p>Shortened URL:</p>
+            <a id="shortenedUrl" href="" target="_blank"></a>
+            <button onclick="copyToClipboard()">Copy</button>
+        </div>
+    </div>
+    <script>
+        const urlDatabase = {};
+
+        function generateShortCode() {
+            return Math.random().toString(36).substring(2, 8);
+        }
+
+        function shortenUrl() {
+            const originalUrl = document.getElementById('originalUrl').value;
+            if (!originalUrl) {
+                alert('Please enter a valid URL!');
+                return;
+            }
+
+            const shortCode = generateShortCode();
+            urlDatabase[shortCode] = originalUrl;
+
+            const shortenedUrl = `${window.location.origin}/#/${shortCode}`;
+            const shortenedUrlElement = document.getElementById('shortenedUrl');
+            shortenedUrlElement.href = shortenedUrl;
+            shortenedUrlElement.textContent = shortenedUrl;
+
+            const shortLinkContainer = document.getElementById('shortLinkContainer');
+            shortLinkContainer.style.display = 'block';
+        }
+
+        function copyToClipboard() {
+            const shortenedUrlElement = document.getElementById('shortenedUrl');
+            navigator.clipboard.writeText(shortenedUrlElement.href)
+                .then(() => alert('Shortened URL copied to clipboard!'))
+                .catch(() => alert('Failed to copy URL.'));
+        }
+
+        window.addEventListener('hashchange', () => {
+            const shortCode = window.location.hash.replace('#/', '');
+            if (urlDatabase[shortCode]) {
+                window.location.href = urlDatabase[shortCode];
+            }
+        });
+    </script>
+</body>
+</html>
