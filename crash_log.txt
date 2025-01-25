@@ -1,4 +1,4 @@
-10:25:24.897 [ERROR] Failed to find resumed state line
-10:25:29.465 [ERROR] Failed to find resumed state line
-10:25:38.356 [ERROR] Handshake error for client.wired: Try again
-10:26:56.602 [ERROR] Failed to find resumed state line
+ [ERROR] Failed to find resumed state line
+ [ERROR] Failed to find resumed state line
+ [ERROR] Handshake error for clieired: Try again
+ [ERROR] Failed to find resumed state line
