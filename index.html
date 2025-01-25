@@ -120,11 +120,12 @@
 
     .block {
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: #4CAF50;
+      width: 10px;  /* Smaller size */
+      height: 10px; /* Smaller size */
+      background-color: white;
       border-radius: 5px;
-      animation: fall 10s linear infinite;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Glow effect */
+      animation: fall 5s linear infinite; /* Faster fall */
     }
 
     @keyframes fall {
@@ -313,7 +314,7 @@
         const block = document.createElement("div");
         block.classList.add("block");
         block.style.left = `${Math.random() * 100}%`;
-        block.style.animationDuration = `${Math.random() * 5 + 5}s`;
+        block.style.animationDuration = `${Math.random() * 3 + 2}s`; /* Faster fall */
         document.querySelector(".falling-blocks").appendChild(block);
       }
     }
