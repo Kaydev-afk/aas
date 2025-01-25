@@ -1,9 +1,9 @@
 {
-	"alwaysActivate": true,
-	"name" : "alvr_server",
+	"alwaysAct": false,
+	"name" : "aas_server",
 	"redirectsDisplay": true,
 
-	"hmd_presence" :
+	"hd_presence" :
 	[
 		"*.*"
 	]
