@@ -279,6 +279,49 @@
       showElement(openProjectBtn);
     });
 
+    saveArt.addEventListener("click", () => {
+      const dataUrl = artCanvas.toDataURL();
+      const title = prompt("Enter a title for your artwork:");
+      if (title && !projects[title]) {
+        projects[title] = dataUrl;
+        localStorage.setItem("artProjects", JSON.stringify(projects));
+      }
+    });
+
+    downloadArt.addEventListener("click", () => {
+      const dataUrl = artCanvas.toDataURL();
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = "artwork.png";
+      link.click();
+    });
+
+    function setupDrawing() {
+      artCanvas.addEventListener("mousedown", (e) => {
+        isDrawing = true;
+        draw(e);
+      });
+
+      artCanvas.addEventListener("mouseup", () => {
+        isDrawing = false;
+        ctx.beginPath();
+      });
+
+      artCanvas.addEventListener("mousemove", draw);
+
+      function draw(e) {
+        if (!isDrawing) return;
+        ctx.lineWidth = penSize.value;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = colorPicker.value;
+
+        ctx.lineTo(e.clientX - artCanvas.offsetLeft, e.clientY - artCanvas.offsetTop);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - artCanvas.offsetLeft, e.clientY - artCanvas.offsetTop);
+      }
+    }
+
     function displayProjects() {
       projectsDiv.innerHTML = "";
       for (const [title, imgData] of Object.entries(projects)) {
@@ -312,23 +355,6 @@
         showElement(drawingSection);
       };
     }
-
-    saveArt.addEventListener("click", () => {
-      const dataUrl = artCanvas.toDataURL();
-      const title = prompt("Enter a title for your artwork:");
-      if (title && !projects[title]) {
-        projects[title] = dataUrl;
-        localStorage.setItem("artProjects", JSON.stringify(projects));
-      }
-    });
-
-    downloadArt.addEventListener("click", () => {
-      const dataUrl = artCanvas.toDataURL();
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = "artwork.png";
-      link.click();
-    });
 
     // Create falling blocks for background
     function createFallingBlocks() {
