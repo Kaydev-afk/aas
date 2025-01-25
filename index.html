@@ -88,7 +88,7 @@
             const shortCode = generateShortCode();
             urlDatabase[shortCode] = originalUrl;
 
-            const shortenedUrl = `${window.location.origin}/#/${shortCode}`;
+            const shortenedUrl = `https://${window.location.hostname}/#/${shortCode}`;
             const shortenedUrlElement = document.getElementById('shortenedUrl');
             shortenedUrlElement.href = shortenedUrl;
             shortenedUrlElement.textContent = shortenedUrl;
@@ -108,6 +108,8 @@
             const shortCode = window.location.hash.replace('#/', '');
             if (urlDatabase[shortCode]) {
                 window.location.href = urlDatabase[shortCode];
+            } else {
+                alert('Invalid or expired link!');
             }
         });
     </script>
